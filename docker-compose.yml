@@ -1,0 +1,46 @@
+version: "3"
+services:
+  front:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./front
+    volumes:
+      - /app/node_modules
+      - ./front:app
+    stdin_open: true
+
+  nginx:
+    restart: always
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile.dev
+    container_name: app_api
+    volumes:
+      - /app/node_moudules
+      - ./api:/app
+
+# 외부에 연결할 예정이라서 지울 없앴음.
+#  mysql:
+#    build:
+#      context: ./mysql
+#      dockerfile: Dockerfile
+#    container_name: app_mysql
+#    restart: unless-stopped
+#    ports:
+#      - "3306": "3306"
+#    volumes:
+#      - ./mysql/mysql_data:/var/lib/mysql
+#      - ./mysql/sqls/:/docker-entrypoint-initdb.d/
+#    environment:
+#      MYSQL_HOST: mysql
+#      MYSQL_USER: root
+#      MYSQL_ROOT_PASSWORD: connor
+#      MYSQL_DATABASE: app
+#      MYSQL_PORT: 3306
