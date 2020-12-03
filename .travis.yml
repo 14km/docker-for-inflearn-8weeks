@@ -6,21 +6,21 @@ services:
   - docker
 
 before_install:
-  - docker build -t smileajw1004/react-test-app -f ./frontend/Dockerfile.dev ./frontend
+  - docker build -t connor/react-app -f ./frontend/Dockerfile.dev ./frontend
 
 script:
-  - docker run -e CI=true smileajw1004/react-test-app npm test
+  - docker run -e CI=true connor/react-app npm test
 
 after_success:
-  - docker build -t smileajw1004/docker-frontend ./frontend
-  - docker build -t smileajw1004/docker-backend ./backend
-  - docker build -t smileajw1004/docker-nginx ./nginx
+  - docker build -t connor/docker-frontend ./frontend
+  - docker build -t connor/docker-backend ./backend
+  - docker build -t connor/docker-nginx ./nginx
 
   - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
 
-  - docker push smileajw1004/docker-frontend
-  - docker push smileajw1004/docker-backend
-  - docker push smileajw1004/docker-nginx
+  - docker push connor/docker-frontend
+  - docker push connor/docker-backend
+  - docker push connor/docker-nginx
 
 deploy:
   provider: elasticbeanstalk
