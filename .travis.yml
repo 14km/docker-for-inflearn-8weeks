@@ -5,9 +5,11 @@ sudo: required
 services:
   - docker
 
+# 설치 하기전에 확인하기
 before_install:
   - docker build -t connor/react-app -f ./frontend/Dockerfile.dev ./frontend
 
+# test 스크립트를 실행하여 검증한다.
 script:
   - docker run -e CI=true connor/react-app npm test
 
