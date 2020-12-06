@@ -25,6 +25,12 @@ services:
     volumes:
       - /app/node_moudules
       - ./api:/app
+    environment:
+      DB_HOST: mysql
+      DB_USER: root
+      DB_ROOT_PASSWORD: connor
+      DB_NAME: myapp
+      DB_PORT: 3306
 
 # 외부에 연결할 예정이라서 지울 없앴음.
 #  mysql:
